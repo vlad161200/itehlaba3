@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Laba3</title>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+<div class="test">
+    <h1>A counter of work experience</h1>
+    <form action="index.html" id="target">
+        Enter your surname:
+        <br>
+        <input type="text" name="surname" placeholder="Surname...">
+        <br>
+        Enter date of your employment:
+        <br>
+        <input type="date" name="startWork">
+        <input type="submit" value="Save">
+    </form>
+    <button id="count">Count work experience</button>
+    <script>
+        let params = location.search.replace("?", "");
+        let arr = params.split("&");
+        let surname = arr[0].replace("surname=", "");
+        surname = decodeURIComponent(surname);
+        let date = arr[1].replace("startWork=", "");
+        let dayLast = new Date();
+        let arrDate = date.split("-");
+        let dayFirst = new Date(parseInt(arrDate[0]), parseInt(arrDate[1]) - 1, parseInt(arrDate[2]));
+        let currentWorkExp = Math.ceil((dayLast - dayFirst) / (60 * 60 * 24 * 1000));
+        $('#count').click(() => {
+            $('#count').remove();
+            $('.test').append(`<p>Current experience of ${surname} is ${currentWorkExp} days.</p>`);
+        });
+    </script>
+</div>
+</body>
+</html>

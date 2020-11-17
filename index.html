@@ -30,9 +30,36 @@
         let arrDate = date.split("-");
         let dayFirst = new Date(parseInt(arrDate[0]), parseInt(arrDate[1]) - 1, parseInt(arrDate[2]));
         let currentWorkExp = Math.ceil((dayLast - dayFirst) / (60 * 60 * 24 * 1000));
+        let avg = 0;
+        let quantity = 0;
+        let generalExp = 0;
+        console.error(localStorage.getItem("quantWorkers"));
+        if (localStorage.getItem("quantWorkers") === null) {
+            localStorage.setItem("quantWorkers", "1");
+            console.log("curworkexp" + String(currentWorkExp));
+            localStorage.setItem("sum", String(currentWorkExp));
+            quantity = parseInt(localStorage.getItem("quantWorkers"));
+            generalExp = parseInt(localStorage.getItem("sum"));
+            avg = generalExp/quantity;
+        } else {
+            quantity = parseInt(localStorage.getItem("quantWorkers"));
+            generalExp = parseInt(localStorage.getItem("sum"));
+            console.log(currentWorkExp);
+            generalExp += currentWorkExp;
+            quantity++;
+            console.log("quan" + quantity);
+            console.log("genexpt" + generalExp);
+            avg = generalExp/quantity;
+            console.log(avg);
+            localStorage.setItem("quantWorkers", String(quantity));
+            localStorage.setItem("sum", String(generalExp));
+        }
+
+
         $('#count').click(() => {
             $('#count').remove();
             $('.test').append(`<p>Current experience of ${surname} is ${currentWorkExp} days.</p>`);
+            $('.test').append(`<p>Average work experience is ${avg}</p>`);
         });
     </script>
 </div>
